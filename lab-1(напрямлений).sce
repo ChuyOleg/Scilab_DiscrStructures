@@ -3,8 +3,7 @@ plot2d([0;100], [0;100], 0);
 function[MATRIX] = createMatrix(n) 
 rand('seed',9527);
 T = rand(n, n)+rand(n, n);
-//A = floor((1.0 - 2*0.02 - 7*0.005 - 0.25)*T);
-A = floor((1.0 - 2*0.01 - 7*0.01 - 0.3) * T);
+A = floor((1.0 - 2*0.02 - 7*0.005 - 0.25)*T);
 B = A';
 C = bool2s(A + B);
 MATRIX = A;
