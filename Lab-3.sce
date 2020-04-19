@@ -289,13 +289,17 @@ function main(n)
   buildLines(Matrix, n, coordinates);
 endfunction
 
+disp(createMatrix(12), 'Початкова матриця')
+main(12);
+xstring(10, 95, 'ПОЧАТКОВИЙ ГРАФ');
 
-//main(12);
-disp(createMatrix(12))
 components = findStrongComponents(12);
 
 matrixCondensat = findMatrixCondensat(12);
-disp(matrixCondensat);
+disp(matrixCondensat, 'матриця конденсації');
+halt('close graphic window and press enter to watch graph condensat')
+plot2d([0;100], [0;100], 0);
+xstring(10, 95, 'ГРАФ КОНДЕНСАЦІЇ');
 coordinates = findCoordinates(10);
 buildCircles(coordinates,10);
 buildLines(matrixCondensat, 10, coordinates);
@@ -304,7 +308,14 @@ buildLines(matrixCondensat, 10, coordinates);
 disp(components, 'Компоненти сильної звязності');
 disp(strongLinkMatrix(12), 'Матриця сильної звязності');
 disp(reachAbilityMatrix(12), 'Матриця досяжності');
+
+A2 = degreeMatrix(12, 2);
+A3 = degreeMatrix(12, 3);
+disp(A2, 'Матриця 2 степеня');
+disp('Шляхи довжини 2');
 findRoadsLength2(12);
+disp(A3, 'Матриця 3 степеня');
+disp('Шляхи довжини 3');
 findRoadsLength3(12);
 
 
