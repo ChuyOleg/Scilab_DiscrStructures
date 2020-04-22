@@ -4,7 +4,7 @@ green = color(0,205,0);
 orange = color(255,140,0);
 red = color(208,0,0);
 
-
+// Створення матриці суміжності ненапрямленого графа і матриці ваг
 function[MATRIX1, MATRIX2] = createMatrix(n) 
   rand('seed',9527);
   T = rand(n, n)+rand(n, n);
@@ -23,7 +23,7 @@ halt('press enter to see matrix');
 disp(usualMatrix, 'Матриця суміжності ненапрямленого графа');
 disp(lengthMatrix, 'Матриця ваг');
 
-
+// Пошук координат
 function[Coordinates] =  findCoordinates(n)
   Coordinates = [50, 50];
   counter = 2;
@@ -43,7 +43,7 @@ function[Coordinates] =  findCoordinates(n)
   end
 endfunction 
 
-
+// Будує вершини
 function buildCircles(coordinates, n, reason, ListVert)
   for count = 1:1:n
     x = coordinates(count, 1);
@@ -65,7 +65,7 @@ function buildCircles(coordinates, n, reason, ListVert)
   end
 endfunction
 
-
+// Шукає координати х,у за заданим кутом
 function [x, y] = find_X_Y(radius, corner)
   extra = 180 / corner;
   x = radius * cos(%pi / extra);
@@ -76,18 +76,20 @@ function [x, y] = find_X_Y(radius, corner)
   end
 endfunction
 
+// Будує петлі
 function drawLoop(ip)
   [x, y] = find_X_Y(5, ip(i, 3));
   xarc(ip(i,1)+x-2,ip(i,2)+y+2, 4, 4, 0, 360*64);
 endfunction
 
+// Малює ваги ребер
 function drawNumbers(x1, x2, y1, y2)
   xMid = (x1 + x2) / 2;
   yMid = (y1 + y2) / 2;
   xnumb(xMid, yMid, lengthMatrix(i ,j));
 endfunction
 
-
+// Будує ребра з центральної вершини
 function drawLinesFromCenter(ip, n, reason, ListVert)
   [x, y] = find_X_Y(3, ip(j, 3));
     x1 = ip(i,1)+x;
@@ -116,6 +118,7 @@ function drawLinesFromCenter(ip, n, reason, ListVert)
   end
 endfunction
 
+// Будує ребра до центральної вершини
 function drawLinesToCenter(ip, n, reason, ListVert)
   [x, y] = find_X_Y(3, ip(i, 3));
   x1 = ip(i,1)-x;
@@ -144,7 +147,7 @@ function drawLinesToCenter(ip, n, reason, ListVert)
   end
 endfunction
 
-
+// Будує ребра (окрім ребер, які стосуються центральної вершини)
 function drawLines(ip, n, reason, ListVert)
   [X1, Y1] = find_X_Y(3, ip(i, 3));
   [X2, Y2] = find_X_Y(3, ip(j, 3));
@@ -174,6 +177,7 @@ function drawLines(ip, n, reason, ListVert)
   end
 endfunction
 
+// Запускає попередні функції для побудови ребер
 function buildLines(Matrix, n, ip, reason, ListVert)
   for i = 1:n
     for j = 1:n
@@ -192,6 +196,7 @@ function buildLines(Matrix, n, ip, reason, ListVert)
   end
 endfunction
 
+// Будує інструкцію в графічному вікні
 function buildInstruction()
   xfarc(5, 116, 6, 6, 0, 360*64);
   gce().background = blue;
@@ -204,6 +209,7 @@ function buildInstruction()
   xstring(22, 87, ' РЕБРО, ЯКЕ ВХОДИТЬ ДО КІСТЯКА'); 
 endfunction
 
+// Будує граф (кістяк або звичайний)
 function main(n, reason)
   plot2d([0;100], [0;100], 0);
   if (reason == 'Tree') then
@@ -223,7 +229,7 @@ function main(n, reason)
   end
 endfunction;
 
-
+// Будує граф (під час знаходження кістяка)
 function mainForSceleton(n, ListVert)
   plot2d([0;100], [0;100], 0);
   buildInstruction();
@@ -233,7 +239,7 @@ function mainForSceleton(n, ListVert)
   buildLines(Matrix, n, coordinates, 'Sceleton', ListVert);
 endfunction
 
-
+// Пошку кістяка
 function ListVert = Sceleton(mGraph,mWeight, startVert,n)
   ListVert = zeros((n - 1), 2);
   point = 1;
@@ -277,6 +283,7 @@ function ListVert = Sceleton(mGraph,mWeight, startVert,n)
   disp(totalWeight, 'Total weight is');
 endfunction
 
+// Створення матриці кістяка
 function MATRIX = createTreeMatrix(ListForSceleton, n)
   MATRIX = zeros(n, n);
   for i = 1:(n - 1)
