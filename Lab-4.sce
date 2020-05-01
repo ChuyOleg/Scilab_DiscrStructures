@@ -208,7 +208,7 @@ function [ListBFS,matrixTree] = BFS(Graph, startVert, n)
         halt('Press enter to continue');
         indexQueue = indexQueue + 1;
         queue(1, indexQueue) = u;
-        matrixTree(find(matrixBFS == (k - 1)), u) = 1; 
+        matrixTree(v, u) = 1; 
       end
       if (u == n)
         copyQueue = queue;
